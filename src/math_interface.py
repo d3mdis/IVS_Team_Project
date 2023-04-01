@@ -33,9 +33,5 @@ class MathInterface(ABC):
         pass
 
     @abstractmethod
-    def power(self, x: float, n: float) -> float:
-        pass
-
-    @abstractmethod
     def root(self, x: float, n: float) -> float:
         pass
