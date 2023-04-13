@@ -35,3 +35,7 @@ class MathInterface(ABC):
     @abstractmethod
     def root(self, x: float, n: float) -> float:
         pass
+
+    @abstractmethod
+    def reciprocal_func(self, x: float) -> float:
+        pass
