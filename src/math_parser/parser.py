@@ -74,7 +74,7 @@ class Parser:
                 self.advance()
                 return result
             else:
-                raise Exception("Expected ')'")
+                raise ValueError
         elif token.type == TokenType.FACTORIAL:
             self.advance()
             return FactorialNode(self.atom())

@@ -68,5 +68,5 @@ class FactorialNode:
     value: object
 
     def __repr__(self):
-        return f'(!{self.value})'
+        return f'({self.value}!)'
 
