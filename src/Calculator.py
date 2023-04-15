@@ -12,15 +12,16 @@ from flet import (
 import pyparsing as pp
 import math_lib
 import math_interface
+from evaluate_rec import Evaluate
 
 HEIGHT = 500
 WIDTH = 360
 
 
 class CalculatorApp(UserControl):
-    def __init__(self, math_interface):
-        super().__init__(math_interface)
-        self.m = math_interface
+    def __init__(self, library):
+        super().__init__(library)
+        self.m = library
         self.result = None
         self.expression = None
         self.operator_map = {
@@ -300,30 +301,9 @@ class CalculatorApp(UserControl):
         # application's root control (i.e. "view") containing all other controls
         return calculator
 
-    def convert_to_nested_list(self, expr):
-        if isinstance(expr, pp.ParseResults):
-            if len(expr) == 1:
-                return self.convert_to_nested_list(expr[0])
-            else:
-                return [self.convert_to_nested_list(expr[0]), expr[1], self.convert_to_nested_list(expr[2])]
-        else:
-            return expr
-
     def parse_expression(self, expression):
-        number = pp.pyparsing_common.number()
-        operand = pp.Forward()
-        operand <<= number | pp.Group(pp.Suppress('(') + operand + pp.Suppress(')'))
-        factor = pp.Forward()
-        factor <<= operand + pp.ZeroOrMore(pp.oneOf('^') + factor)
-        term = factor + pp.ZeroOrMore(pp.oneOf('* /') + factor)
-        expr = term + pp.ZeroOrMore(pp.oneOf('+ -') + term)
-
-        # parse input expression
-        input_expr = "4*(5+2)*1"
-        result = expr.parseString(input_expr)[0]
-        result = self.convert_to_nested_list(result)
-
-        return print(result)
+        evaluated_expression = Evaluate(expression, self.m).evaluate()
+        return evaluated_expression
 
     def button_clicked(self, e):
         if e.control.data == "AC":
