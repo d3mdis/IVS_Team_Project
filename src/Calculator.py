@@ -9,7 +9,7 @@ from flet import (
     UserControl,
     colors,
 )
-import pyparsing
+import pyparsing as pp
 import math_lib
 import math_interface
 
@@ -18,29 +18,57 @@ WIDTH = 360
 
 
 class CalculatorApp(UserControl):
-    def __init__(self, math_library):
-        super().__init__(math_library)
-
-    def parse_expression(self, expression):
-        pass
+    def __init__(self, math_interface):
+        super().__init__(math_interface)
+        self.m = math_interface
+        self.result = None
+        self.expression = None
+        self.operator_map = {
+            "+": self.m.add,
+            "-": self.m.subtract,
+            "*": self.m.multiply,
+            "/": self.m.divide,
+            "^": self.m.power,
+            "√": self.m.root,
+            "1/x": self.m.reciprocal_func,
+            "!x": self.m.factorial
+        }
 
     def build(self):
-        result = Text(value="0", color=colors.WHITE, size=40)
-        result_field = Row(controls=[result],
-                           expand=1,
-                           alignment=ft.MainAxisAlignment.END)
+        self.result = Text(value="0", color=colors.WHITE, size=40)
+        self.expression = Text(value="0", color=colors.WHITE, size=20)
+
+        result_field = Row(
+            expand=1,
+            alignment=ft.MainAxisAlignment.END,
+            controls=[
+                Column(
+                    alignment=ft.MainAxisAlignment.END,
+                    horizontal_alignment=ft.CrossAxisAlignment.END,
+                    controls=[
+                        self.expression,
+                        self.result,
+                    ]
+                )
+            ]
+        )
+
         numpad_parentheses = Row(
             controls=[
                         ElevatedButton(
                             text="(",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="(",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text=")",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data=")",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                     ]
@@ -51,23 +79,31 @@ class CalculatorApp(UserControl):
                             text="AC",
                             bgcolor=colors.BLUE_GREY_100,
                             color=colors.BLACK,
+                            data="AC",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="1/x",
                             bgcolor=colors.BLUE_GREY_100,
                             color=colors.BLACK,
+                            data="1/x",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="!x",
                             bgcolor=colors.BLUE_GREY_100,
                             color=colors.BLACK,
+                            data="!",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             content=ft.Icon(name=ft.icons.BACKSPACE, color=colors.WHITE),
                             bgcolor=colors.ORANGE,
+                            data="BACKSPACE",
+                            on_click=self.button_clicked,
                             expand=2,
                         ),
                     ]
@@ -78,30 +114,40 @@ class CalculatorApp(UserControl):
                             text="7",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="7",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="8",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="8",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="9",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="9",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="+",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="+",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="-",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="-",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
 
@@ -113,30 +159,40 @@ class CalculatorApp(UserControl):
                             text="4",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="4",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="5",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="5",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="6",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="6",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="*",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="*",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="/",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="/",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                     ]
@@ -147,30 +203,40 @@ class CalculatorApp(UserControl):
                             text="1",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="1",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="2",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="2",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="3",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="3",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="xⁿ",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="^",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text="√",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="√",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                     ]
@@ -181,18 +247,24 @@ class CalculatorApp(UserControl):
                             text="0",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data="0",
+                            on_click=self.button_clicked,
                             expand=1,
                         ),
                         ElevatedButton(
                             text=".",
                             bgcolor=colors.WHITE24,
                             color=colors.WHITE,
+                            data=".",
+                            on_click=self.button_clicked,
                             expand=2,
                         ),
                         ElevatedButton(
                             text="=",
                             bgcolor=colors.ORANGE,
                             color=colors.WHITE,
+                            data="=",
+                            on_click=self.button_clicked,
                             expand=2,
                         )
                     ]
@@ -224,9 +296,50 @@ class CalculatorApp(UserControl):
                           numpad]
             )
         )
-        #numpad.alignment = ft.alignment.center
+
         # application's root control (i.e. "view") containing all other controls
         return calculator
+
+    def convert_to_nested_list(self, expr):
+        if isinstance(expr, pp.ParseResults):
+            if len(expr) == 1:
+                return self.convert_to_nested_list(expr[0])
+            else:
+                return [self.convert_to_nested_list(expr[0]), expr[1], self.convert_to_nested_list(expr[2])]
+        else:
+            return expr
+
+    def parse_expression(self, expression):
+        number = pp.pyparsing_common.number()
+        operand = pp.Forward()
+        operand <<= number | pp.Group(pp.Suppress('(') + operand + pp.Suppress(')'))
+        factor = pp.Forward()
+        factor <<= operand + pp.ZeroOrMore(pp.oneOf('^') + factor)
+        term = factor + pp.ZeroOrMore(pp.oneOf('* /') + factor)
+        expr = term + pp.ZeroOrMore(pp.oneOf('+ -') + term)
+
+        # parse input expression
+        input_expr = "4*(5+2)*1"
+        result = expr.parseString(input_expr)[0]
+        result = self.convert_to_nested_list(result)
+
+        return print(result)
+
+    def button_clicked(self, e):
+        if e.control.data == "AC":
+            self.result.value = "0"
+        elif e.control.data == "BACKSPACE":
+            self.result.value = self.result.value[:-1]
+        elif e.control.data == "=":
+            self.expression.value = self.result.value
+            self.result.value = self.parse_expression(self.result.value)
+            self.expression.value += "="
+
+        else:
+            if self.result.value == "0":
+                self.result.value = ""
+            self.result.value += e.control.data
+        self.update()
 
 
 def set_page_params(page: Page):
