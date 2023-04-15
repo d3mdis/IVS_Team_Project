@@ -8,8 +8,35 @@ class Lexer:
     usage in parser
     """
     def __init__(self, expression: str):
-        self.expression = iter(expression)
-        self.advance()
+        if "!" in expression:
+            self.expression = self.move_factorial(expression)
+            self.expression = iter(self.expression)
+            self.advance()
+        else:
+            self.expression = iter(expression)
+            self.advance()
+
+    def move_factorial(self, expression):
+        for index, value in enumerate(expression):
+            if value == "!":
+                if expression[index-1] == ")":
+                    for i in range(index-1, -1, -1):
+                        if expression[i] == "(":
+                            expression = expression[:i] + "!" + expression[i:]
+                            expression = expression[:index+1] + expression[index+2:]
+                            break
+                else:
+                    if index-1 == 0:
+                        expression = "!" + expression
+                        expression = expression[:index+1] + expression[index+2:]
+                    else:
+                        for i in range(index-1, 0, -1):
+                            if expression[i] not in DIGITS:
+                                expression = expression[:i+1] + "!" + expression[i+1:]
+                                expression = expression[:index+1] + expression[index+2:]
+                                break
+        return expression
+
 
     def advance(self):
         try:
