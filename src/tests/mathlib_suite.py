@@ -1,5 +1,5 @@
 import unittest
-from math_interface import MathInterface, IMathLib # <--- Q: sys.path.append('?')
+from ..math_interface import MathInterface, IMathLib # <--- Q: sys.path.append('?')
 
 
 class SumTest(unittest.TestCase):
