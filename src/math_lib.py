@@ -27,7 +27,7 @@ class MathLib(MathInterface):
     def power(self, x: float, n: float) -> float:
         if (x > float(1e+308)) or (n > float(1e+308)):
             raise OverflowError
-        if (n >= 0) and (isinstance(n, int)):
+        if isinstance(n, int):
             return x**n
         raise ValueError
 
