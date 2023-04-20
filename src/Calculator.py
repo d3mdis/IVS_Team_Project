@@ -9,7 +9,7 @@ from flet import (
     UserControl,
     colors,
 )
-from math import pi
+
 import math_lib
 import math_interface
 from evaluate_rec import Evaluate
@@ -20,7 +20,7 @@ BG_GRADIENT = ft.LinearGradient(
     begin=ft.alignment.top_center,
     end=ft.alignment.bottom_center,
     stops=[0.0, 0.58, 1.0],
-    colors=["#51108c", "#1c144f", "#100149"]##570c5e#0c0038
+    colors=["#51108c", "#1c144f", "#100149"]
 )
 DISPLAY_GRADIENT = ft.LinearGradient(
     begin=ft.alignment.bottom_left,
@@ -29,10 +29,8 @@ DISPLAY_GRADIENT = ft.LinearGradient(
 )
 
 
-
-
 class CalculatorApp(UserControl):
-    def __init__(self, library):
+    def __init__(self, library: math_interface.MathInterface):
         super().__init__()
         self.m = library
         self.result = None
@@ -41,8 +39,6 @@ class CalculatorApp(UserControl):
     def build(self):
         self.result = Text(value=" 0", width=300, text_align=ft.TextAlign.END, no_wrap=True, color=colors.WHITE, size=40)
         self.expression = Text(value="0", width=260, text_align=ft.TextAlign.END, no_wrap=True, color=colors.WHITE, size=20)
-
-        #header =
 
         result_field = Container(
             width=330,
@@ -128,8 +124,7 @@ class CalculatorApp(UserControl):
             controls=[
                         ElevatedButton(
                             text="7",
-                            bgcolor="#0c0038",#colors.WHITE24,
-                            #opacity=0.6,
+                            bgcolor="#0c0038",
                             elevation=5,
                             color=colors.WHITE,
                             data="7",
@@ -336,12 +331,14 @@ class CalculatorApp(UserControl):
         result = str(evaluated_expression)
         if result == "None":
             result = "0"
+        elif len(result) > 13:
+            return '{:.2e}'.format(float(result))
         if result[-2:] == ".0":
             return result[:-2]
         else:
             return result
 
-    def calculate_result(self, expression: str):
+    def calculate_result(self):
         self.result.value = self.result.value.strip()
         if self.check_expression(self.result.value):
             self.result.value = "Error"
@@ -361,8 +358,7 @@ class CalculatorApp(UserControl):
 
         #evaluate expression
         elif e.control.data == "=":
-            self.calculate_result(self.result.value)
-
+            self.calculate_result()
         #inverse
         elif e.control.data == "1/x":
             if len(self.result.value) == 1:
@@ -372,7 +368,7 @@ class CalculatorApp(UserControl):
 
         #base hint
         else:
-            if self.result.value == " 0":
+            if self.result.value == " 0" or self.result.value == "Error":
                 self.result.value = ""
             self.result.value += e.control.data
         self.update()
@@ -413,7 +409,7 @@ def main(page: Page):
         elif e.key == "Backspace":
             calc.result.value = calc.result.value[:-1]
         elif e.key == "Enter":
-            calc.calculate_result(calc.result.value)
+            calc.calculate_result()
         elif e.key in "0123456789-+^*()/!.":
             if calc.result.value == " 0":
                 calc.result.value = ""
@@ -428,7 +424,6 @@ def main(page: Page):
     page.title = "Calc App"
     page.on_keyboard_event = key_pressed
 
-
     # add application's root control to the page
     page.add(Container(
         width=360,
@@ -438,11 +433,10 @@ def main(page: Page):
         padding=5,
         border_radius=10,
         bgcolor="#51108c",
-        #gradient=DISPLAY_GRADIENT,
         content=ft.WindowDragArea(
             Row(
                 expand=1,
-                alignment=ft.MainAxisAlignment.CENTER,\
+                alignment=ft.MainAxisAlignment.CENTER,
                 spacing=255,
                 controls=[
                     ft.IconButton(ft.icons.MENU_BOOK_ROUNDED,

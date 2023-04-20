@@ -10,7 +10,6 @@ class Evaluate:
         translated_expression = Lexer(expression)
         translated_expression = translated_expression.tokenize()
         self.tree = Parser(translated_expression).parse()
-        print(self.tree)
 
     def evaluate(self):
         if self.tree is None:

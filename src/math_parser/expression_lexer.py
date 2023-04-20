@@ -30,9 +30,13 @@ class Lexer:
                         expression = "!" + expression
                         expression = expression[:index+1] + expression[index+2:]
                     else:
-                        for i in range(index-1, 0, -1):
+                        for i in range(index-1, -1, -1):
                             if expression[i] not in DIGITS:
                                 expression = expression[:i+1] + "!" + expression[i+1:]
+                                expression = expression[:index+1] + expression[index+2:]
+                                break
+                            if i == 0:
+                                expression = "!" + expression
                                 expression = expression[:index+1] + expression[index+2:]
                                 break
         return expression

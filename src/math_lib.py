@@ -1,4 +1,4 @@
-from src.math_interface import MathInterface
+from math_interface import MathInterface
 
 
 class MathLib(MathInterface):
