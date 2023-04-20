@@ -1,4 +1,4 @@
-from math_interface import MathInterface
+from src.math_interface import MathInterface
 
 
 class MathLib(MathInterface):
@@ -22,12 +22,14 @@ class MathLib(MathInterface):
     def divide(self, x: float, y: float) -> float:
         if (x > float(1e+308)) or (y > float(1e+308)):
             raise OverflowError
-        return round(x/y, 6)
+        if y == 0:
+            raise ZeroDivisionError
+        return round(x/y, 5)
 
     def power(self, x: float, n: float) -> float:
         if (x > float(1e+308)) or (n > float(1e+308)):
             raise OverflowError
-        if isinstance(n, int):
+        if (x <= 0 and isinstance(n, int)) or (x >= 0):
             return x**n
         raise ValueError
 
@@ -36,7 +38,9 @@ class MathLib(MathInterface):
             raise OverflowError
         if x < 0:
             raise ValueError
-        return round(x**(1/n), 6)
+        if n == 0:
+            raise ValueError
+        return round(x**(1/n), 5)
 
     def factorial(self, x: int) -> int:
         try:

@@ -35,6 +35,7 @@ class CalculatorApp(UserControl):
         self.m = library
         self.result = None
         self.expression = None
+        self.hint_states = ["Zero Division", "Syntax error", " 0"]
 
     def build(self):
         self.result = Text(value=" 0", width=300, text_align=ft.TextAlign.END, no_wrap=True, color=colors.WHITE, size=40)
@@ -326,8 +327,11 @@ class CalculatorApp(UserControl):
     def parse_expression(self, expression):
         try:
             evaluated_expression = Evaluate(expression, self.m).evaluate()
+        except ZeroDivisionError:
+            return "Zero Division"
         except ValueError:
-            return "Error"
+            return "Syntax error"
+
         result = str(evaluated_expression)
         if result == "None":
             result = "0"
@@ -341,7 +345,7 @@ class CalculatorApp(UserControl):
     def calculate_result(self):
         self.result.value = self.result.value.strip()
         if self.check_expression(self.result.value):
-            self.result.value = "Error"
+            self.result.value = "Syntax error"
         else:
             self.expression.value = self.result.value
             self.result.value = self.parse_expression(self.result.value)
@@ -368,7 +372,7 @@ class CalculatorApp(UserControl):
 
         #base hint
         else:
-            if self.result.value == " 0" or self.result.value == "Error":
+            if self.result.value in self.hint_states:
                 self.result.value = ""
             self.result.value += e.control.data
         self.update()

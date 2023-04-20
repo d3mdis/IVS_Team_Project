@@ -2,6 +2,10 @@ from .tokenizer import TokenType
 from .node_system import *
 
 
+class TokenException(Exception):
+    def __init__(self, message="Syntax error"):
+        super(TokenException, self).__init__(message)
+
 class Parser:
     def __init__(self, tokens):
         self.tokens = iter(tokens)
@@ -85,5 +89,5 @@ class Parser:
             self.advance()
             return MultiplyNode(NumberNode(-1), self.atom())
         else:
-            raise Exception("Unexpected token")
+            raise ValueError
 
