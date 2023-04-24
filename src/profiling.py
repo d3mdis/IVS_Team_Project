@@ -1,5 +1,5 @@
 import sys
-import src.math_lib as math_lib
+import math_lib as math_lib
 
 mathLib = math_lib.MathLib()
 
