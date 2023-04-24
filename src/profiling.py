@@ -11,7 +11,10 @@ def read_from_stdin():
     for line in sys.stdin:
         if line.rstrip() == '':
             break
-        arr.extend((line.split(" ")))
+        if '\t' in line:
+            arr.extend(line.split("\t"))
+        if ' ' in line:
+            arr.extend((line.split(" ")))
         arr = [item if isinstance(item, float) else float(item) for item in arr]
     return arr
 
