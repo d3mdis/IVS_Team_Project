@@ -9,7 +9,8 @@ all:
         fi; \
     done
 pack:
-	mkdir $(TARGET_FOLDER)
+	mkdir $(TARGET_FOLDER) 
+	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
 	mv doc $(TARGET_FOLDER)/
 	cd ../ && mkdir install && cp -r calculator-1.0 install/ && cp -r profiler-1.0 install/ && mv install src/$(TARGET_FOLDER)/
@@ -20,6 +21,7 @@ pack:
 	rm -rf $(TARGET_FOLDER)
 
 doc:
+	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
 test:
 	python3 -m unittest mathlib_suite 
