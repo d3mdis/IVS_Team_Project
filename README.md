@@ -31,17 +31,17 @@
   Windows, Mac, multiple Linux distros
   
 ## Platform:
-  Ubuntu 22.04
-  Windows 10/11 ()
+  Ubuntu 22.04<br/>
+  Windows 10/11 ()<br/>
   
 ## Authors:
-  xragan00  Denis Ragan
-  xtabac03  Timotej Tabaček
-  xfiedl05  Simon Fiedler
-  236811    David Dovala
+  xragan00  Denis Ragan<br/>
+  xtabac03  Timotej Tabaček<br/>
+  xfiedl05  Simon Fiedler<br/>
+  236811    David Dovala<br/>
   
-##License
-   GNU
+## License
+   GNU<br/>
 
 ## Known issues:
   <placeholder>
