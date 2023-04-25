@@ -1,7 +1,7 @@
 from math_interface import MathInterface
 
 ## @file math_lib.py
-## @author Denis Ragan (xragan82)
+## @author Denis Ragan (xragan00)
 ## @brief Math Library
 
 
