@@ -4,7 +4,7 @@
   Made with Python and Flet framework.
   
 ## Requirements:
-  Python 3.7+, pip, Pyinstaller module
+  Python 3.7+, pip, Pyinstaller module, Flet
 
 ## How does it work?
 
@@ -29,6 +29,19 @@
 
 ## Tested on:
   Windows, Mac, multiple Linux distros
+  
+## Platform:
+  Ubuntu 22.04<br/>
+  Windows 10/11<br/>
+  
+## Authors:
+  xragan00 - Denis Ragan<br/>
+  xtabac03 - Timotej Tabaček<br/>
+  xfiedl05 - Simon Fiedler<br/>
+  236811   - David Dovala<br/>
+  
+## License
+   GNU<br/>
 
 ## Known issues:
   <placeholder>
