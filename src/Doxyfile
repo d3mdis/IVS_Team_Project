@@ -6,7 +6,7 @@ INPUT                  = . math_parser
 FILE_PATTERNS          = *.py
 
 # Output directory
-OUTPUT_DIRECTORY       = doxy_documentation
+OUTPUT_DIRECTORY       = doc
 
 GENERATE_HTML          = YES
 HTML_OUTPUT            = html
