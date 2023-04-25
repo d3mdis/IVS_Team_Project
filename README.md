@@ -4,15 +4,16 @@
   Made with Python and Flet framework.
   
 ## Requirements:
-  Python 3.7+, pip, Pyinstaller module, Flet
+  Python 3.7+, Pip, Pyinstaller, Flet
 
 ## How does it work?
 
   This repo contains two separated applications: calculator.py and profiling.py. Both of them are using our mathematical library.
   1. Git clone this repository
-  2. Unzip and cd into it
+  2. Unzip and cd into one of the apps folder
   3. Run "make" command
-  4. Done.
+  4. Cd into dist and run app
+  5. Done.
   
 ## Usage:
   
