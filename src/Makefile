@@ -10,7 +10,7 @@ all:
 pack: 
 
 doc:
-
+	doxygen Doxyfile
 
 test:
 	python3 -m unittest mathlib_suite 
@@ -21,6 +21,7 @@ run:
 profile:
 	@python -c 'import sys' || (echo "sys module not found, installing..." && pip install sys)
 
-clean:
+clean: 
+	rm -rf ./doxy_documentation
 
 .PHONY: clean
