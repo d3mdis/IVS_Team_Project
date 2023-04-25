@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 #  -*- coding: utf-8 -*-
-# -----------------------------------------------------------
-# @file: Calculator.py
-# @Author: Timotej Tabacek(xtabac03)
-# @brief: Calculator application interface
-# -----------------------------------------------------------
-"""
-Calculator application interface built with flet library.
-supports basic operations and some special functions.
-Part of the application is a custom-built math library with an interpreter package.
-"""
-# -----------------------------------------------------------
+## -----------------------------------------------------------
+## @file: Calculator.py
+## @Author: Timotej Tabacek(xtabac03)
+## @brief: Calculator application interface
+## -----------------------------------------------------------
+
+## Calculator application interface built with flet library.
+## supports basic operations and some special functions.
+## Part of the application is a custom-built math library with an interpreter package.
+## The interpreter package converts a string expression to tree form, which is recurisvely evaluated.
+## -----------------------------------------------------------
 import flet as ft
 from flet import (
     Column,
@@ -55,11 +55,10 @@ DISPLAY_GRADIENT = ft.LinearGradient(
 
 
 class CalculatorApp(UserControl):
-    """
-    @brief: Calculator application.
-    @param library: math library compliant with math interface
-    @return: Calculator application
-    """
+    ## @brief Calculator application.
+    ## @param library math library compliant with math interface
+    ## @return Calculator application
+
     def __init__(self, library: math_interface.MathInterface):
         super().__init__()
         self.m = library
@@ -347,11 +346,10 @@ class CalculatorApp(UserControl):
         return calculator
 
     def check_expression(self, expression: str) -> bool:
-        """
-        @brief: Checks if the expression is valid
-        @param expression: The expression to check in string format
-        @return: True if the expression is invalid, False otherwise
-        """
+        ## @brief Checks if the expression is valid
+        ## @param expression The expression to check in string format
+        ## @return True if the expression is invalid, False otherwise
+
         for char in expression:
             if char not in "0123456789.+-*/^√()!":
                 return True
@@ -362,12 +360,10 @@ class CalculatorApp(UserControl):
         return False
 
     def parse_expression(self, expression):
-        """
-        @brief: Parses the expression and returns the result
-        @param expression: The expression to parse in string format
-        @return: The result of the expression in string format
+        ## @brief Parses the expression and returns the result
+        ## @param expression: The expression to parse in string format
+        ## @return The result of the expression in string format
 
-        """
         try:
             evaluated_expression = Evaluate(expression, self.m).evaluate()
         except ZeroDivisionError:
@@ -388,11 +384,9 @@ class CalculatorApp(UserControl):
             return result
 
     def calculate_result(self):
-        """
-        @brief: Calculates the result of the expression
+        ## @brief Calculates the result of the expression
 
-        Method used for setting the calculator's display information
-        """
+        ## Method used for setting the calculator's display information
         self.result.value = self.result.value.strip()
         if self.check_expression(self.result.value):
             self.result.value = "Syntax error"
@@ -402,10 +396,9 @@ class CalculatorApp(UserControl):
             self.expression.value += "="
 
     def button_clicked(self, e):
-        """
-        @brief: Button click event handler
-        @param e: The event object
-        """
+        ## @brief Button click event handler
+        ## @param e The event object
+
         # delete all
         if e.control.data == "AC":
             self.result.value = " 0"
@@ -464,9 +457,8 @@ def main(page: Page):
                   "Numpad Subtract": "-"}
 
     def set_page_params():
-        """
-        @brief: Sets the page parameters
-        """
+        ## @brief Sets the page parameters
+
         page.window_width = WIDTH
         page.window_height = HEIGHT + 80
         page.window_min_width = WIDTH
@@ -495,12 +487,10 @@ def main(page: Page):
         page.update()
 
     def key_pressed(e):
-        """
-        @brief: Key press event handler
-        @param e: The event object
+        ## @brief Key press event handler
+        ## @param e The event object
 
-        Method used for handling the key press events
-        """
+        ## Method used for handling the key press events
         hint_states = ["Zero Division", "Syntax error", " 0"]
         if e.key == "Escape":
             e.page.window_close()
