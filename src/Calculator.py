@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+#  -*- coding: utf-8 -*-
+# -----------------------------------------------------------
+# @file: Calculator.py
+# @Author: Timotej Tabacek(xtabac03)
+# @brief: Calculator application interface
+# -----------------------------------------------------------
+"""
+Calculator application interface built with flet library.
+supports basic operations and some special functions.
+Part of the application is a custom-built math library with an interpreter package.
+"""
+# -----------------------------------------------------------
 import flet as ft
 from flet import (
     Column,
@@ -14,6 +27,8 @@ import math_lib
 import math_interface
 from evaluate_rec import Evaluate
 
+
+# set constants
 HEIGHT = 500
 WIDTH = 360
 
@@ -25,8 +40,7 @@ HINT_MESSAGE = "Usage hint: \n" \
                "5. Use * for multiplication, e.g. 4*2 = 8\n" \
                "6. Use - for subtraction, e.g. 4-2 = 2\n" \
                "7. Use + for addition, e.g. 4+2 = 6\n" \
-               "Calculator supports parenthesis and the expression length is limited to screen size\n" \
-
+               "Calculator supports parenthesis and the expression length is limited to screen size\n"
 BG_GRADIENT = ft.LinearGradient(
     begin=ft.alignment.top_center,
     end=ft.alignment.bottom_center,
@@ -41,6 +55,11 @@ DISPLAY_GRADIENT = ft.LinearGradient(
 
 
 class CalculatorApp(UserControl):
+    """
+    @brief: Calculator application.
+    @param library: math library compliant with math interface
+    @return: Calculator application
+    """
     def __init__(self, library: math_interface.MathInterface):
         super().__init__()
         self.m = library
@@ -328,6 +347,11 @@ class CalculatorApp(UserControl):
         return calculator
 
     def check_expression(self, expression: str) -> bool:
+        """
+        @brief: Checks if the expression is valid
+        @param expression: The expression to check in string format
+        @return: True if the expression is invalid, False otherwise
+        """
         for char in expression:
             if char not in "0123456789.+-*/^√()!":
                 return True
@@ -338,6 +362,12 @@ class CalculatorApp(UserControl):
         return False
 
     def parse_expression(self, expression):
+        """
+        @brief: Parses the expression and returns the result
+        @param expression: The expression to parse in string format
+        @return: The result of the expression in string format
+
+        """
         try:
             evaluated_expression = Evaluate(expression, self.m).evaluate()
         except ZeroDivisionError:
@@ -358,6 +388,11 @@ class CalculatorApp(UserControl):
             return result
 
     def calculate_result(self):
+        """
+        @brief: Calculates the result of the expression
+
+        Method used for setting the calculator's display information
+        """
         self.result.value = self.result.value.strip()
         if self.check_expression(self.result.value):
             self.result.value = "Syntax error"
@@ -367,55 +402,34 @@ class CalculatorApp(UserControl):
             self.expression.value += "="
 
     def button_clicked(self, e):
-        #delete all
+        """
+        @brief: Button click event handler
+        @param e: The event object
+        """
+        # delete all
         if e.control.data == "AC":
             self.result.value = " 0"
 
-        #backspace
+        # backspace
         elif e.control.data == "BACKSPACE":
             self.result.value = self.result.value[:-1]
 
-        #evaluate expression
+        # evaluate expression
         elif e.control.data == "=":
             self.calculate_result()
-        #inverse
+        # inverse
         elif e.control.data == "1/x":
             if len(self.result.value) == 1:
                 self.result.value = f"1/{self.result.value}"
             else:
                 self.result.value = f"1/({self.result.value})"
 
-        #base hint
+        # base hint
         else:
             if self.result.value in self.hint_states:
                 self.result.value = ""
             self.result.value += e.control.data
         self.update()
-
-
-def set_page_params(page: Page):
-    page.window_width = WIDTH
-    page.window_height = HEIGHT + 80
-    page.window_min_width = WIDTH
-    page.window_min_height = HEIGHT + 80
-    page.window_max_width = WIDTH
-    page.window_max_height = HEIGHT + 80
-
-    page.window_maximizable = False
-    page.window_minimizable = False
-
-    page.update()
-    page.bgcolor = "#0c0038"
-
-    page.window_frameless = True
-    page.window_title_bar_hidden = True
-    page.window_title_bar_buttons_hidden = True
-    page.window_opacity = 0.9
-
-    page.window_left = 400
-    page.window_top = 200
-    page.update()
-
 
 def main(page: Page):
     mathlib = math_lib.MathLib()
@@ -432,7 +446,6 @@ def main(page: Page):
     numpad_keys = ["Numpad 0", "Numpad 1", "Numpad 2", "Numpad 3", "Numpad 4", "Numpad 5", "Numpad 6", "Numpad 7",
                    "Numpad 8", "Numpad 9", "Numpad Add", "Numpad Decimal", "Numpad Divide",
                    "Numpad Equal", "Numpad Multiply", "Numpad Subtract"]
-
     numpad_map = {"Numpad 0": "0",
                   "Numpad 1": "1",
                   "Numpad 2": "2",
@@ -450,14 +463,45 @@ def main(page: Page):
                   "Numpad Multiply": "*",
                   "Numpad Subtract": "-"}
 
+    def set_page_params():
+        """
+        @brief: Sets the page parameters
+        """
+        page.window_width = WIDTH
+        page.window_height = HEIGHT + 80
+        page.window_min_width = WIDTH
+        page.window_min_height = HEIGHT + 80
+        page.window_max_width = WIDTH
+        page.window_max_height = HEIGHT + 80
+
+        page.window_maximizable = False
+        page.window_minimizable = False
+
+        page.update()
+        page.bgcolor = "#0c0038"
+
+        page.window_frameless = True
+        page.window_title_bar_hidden = True
+        page.window_title_bar_buttons_hidden = True
+        page.window_opacity = 0.9
+
+        page.window_left = 400
+        page.window_top = 200
+        page.update()
+
     def page_resize(e):
         page.window_width = WIDTH
         page.window_height = HEIGHT + 80
         page.update()
 
     def key_pressed(e):
-        hint_states = ["Zero Division", "Syntax error", " 0"]
+        """
+        @brief: Key press event handler
+        @param e: The event object
 
+        Method used for handling the key press events
+        """
+        hint_states = ["Zero Division", "Syntax error", " 0"]
         if e.key == "Escape":
             e.page.window_close()
         elif e.key == "Delete":
@@ -478,13 +522,14 @@ def main(page: Page):
         calc.update()
 
     # set page parameters
-    set_page_params(page)
+    set_page_params()
     page.on_resize = page_resize
 
-    page.title = "Calc App"
+    page.title = "Calculator"
     page.on_keyboard_event = key_pressed
 
     # add application's root control to the page
+    # container for the title bar of the app
     page.add(Container(
         width=360,
         height=100,
