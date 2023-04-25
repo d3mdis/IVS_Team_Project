@@ -16,6 +16,8 @@ pack:
 	cd $(TARGET_FOLDER)/ && mkdir repo
 	rsync -av --exclude='$(TARGET_FOLDER)' ./ $(TARGET_FOLDER)/repo/src/
 	cd ../ && rsync -av --exclude='src' ./ src/$(TARGET_FOLDER)/repo/
+	tar cvzf $(TARGET_FOLDER).tar.gz $(TARGET_FOLDER)
+	rm -rf $(TARGET_FOLDER)
 
 doc:
 	doxygen Doxyfile
@@ -29,7 +31,7 @@ profile:
 	@python -c 'import sys' || (echo "sys module not found, installing..." && pip install sys)
 
 clean: 
-	rm -rf $(TARGET_FOLDER)
+	rm -rf $(TARGET_FOLDER).tar.gz
 	rm -f __pychache__
 
 .PHONY: clean
