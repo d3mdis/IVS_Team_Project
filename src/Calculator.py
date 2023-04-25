@@ -303,9 +303,11 @@ class CalculatorApp(UserControl):
             width=WIDTH,
             height=HEIGHT,
             gradient=BG_GRADIENT,
+            expand=True,
             padding=10,
             border_radius=ft.border_radius.all(10),
             content=Column(
+                expand=True,
                 controls=[result_field,
                           numpad]
             )
@@ -330,6 +332,8 @@ class CalculatorApp(UserControl):
         except ZeroDivisionError:
             return "Zero Division"
         except ValueError:
+            return "Syntax error"
+        except AttributeError:
             return "Syntax error"
 
         result = str(evaluated_expression)
@@ -380,16 +384,26 @@ class CalculatorApp(UserControl):
 
 def set_page_params(page: Page):
     page.window_width = WIDTH
-    page.window_height = HEIGHT + 60
+    page.window_height = HEIGHT + 80
+    page.window_min_width = WIDTH
+    page.window_min_height = HEIGHT + 80
+    page.window_max_width = WIDTH
+    page.window_max_height = HEIGHT + 80
+
     page.window_maximizable = False
+    page.window_minimizable = False
+    page.window_resizable = False
+    page.update()
     page.bgcolor = "#0c0038"
 
+    page.window_frameless = True
     page.window_title_bar_hidden = True
     page.window_title_bar_buttons_hidden = True
     page.window_opacity = 0.9
-#   page.window_title_bar_hidden = True
+
     page.window_left = 400
     page.window_top = 200
+    page.update()
 
 
 def main(page: Page):
@@ -404,6 +418,11 @@ def main(page: Page):
         "8": "*",
         "9": "(",
     }
+
+    def page_resize(e):
+        page.window_width = WIDTH
+        page.window_height = HEIGHT + 80
+        page.update()
 
     def key_pressed(e):
         if e.key == "Escape":
@@ -425,6 +444,8 @@ def main(page: Page):
 
     # set page parameters
     set_page_params(page)
+    page.on_resize = page_resize
+
     page.title = "Calc App"
     page.on_keyboard_event = key_pressed
 
