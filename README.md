@@ -35,10 +35,10 @@
   Windows 10/11<br/>
   
 ## Authors:
-  xragan00  Denis Ragan<br/>
-  xtabac03  Timotej Tabaček<br/>
-  xfiedl05  Simon Fiedler<br/>
-  236811    David Dovala<br/>
+  xragan00 - Denis Ragan<br/>
+  xtabac03 - Timotej Tabaček<br/>
+  xfiedl05 - Simon Fiedler<br/>
+  236811   - David Dovala<br/>
   
 ## License
    GNU<br/>
