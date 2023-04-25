@@ -2,7 +2,7 @@
 PROJECT_NAME           = "Calculator"
 PROJECT_NUMBER         = "1.0"
 
-INPUT                  = src math_parser
+INPUT                  = . math_parser
 FILE_PATTERNS          = *.py
 
 # Output directory
