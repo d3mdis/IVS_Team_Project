@@ -29,6 +29,19 @@
 
 ## Tested on:
   Windows, Mac, multiple Linux distros
+  
+## Platform:
+  Ubuntu 22.04
+  Windows 10/11 ()
+  
+## Authors:
+  xragan00  Denis Ragan
+  xtabac03  Timotej Tabaček
+  xfiedl05  Simon Fiedler
+  236811    David Dovala
+  
+##License
+   GNU
 
 ## Known issues:
   <placeholder>
