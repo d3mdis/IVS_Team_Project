@@ -12,7 +12,7 @@
   1. Git clone this repository
   2. Unzip and cd into it
   3. Run "make" command
-  4. Done. Now you have two runnable applications. 
+  4. Done.
   
 ## Usage:
   

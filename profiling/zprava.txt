@@ -1,0 +1,4 @@
+Kedže sme si ako programovací jazyk vybrali Python, pamäť sa dynamicky zväčšuje sama.
+Avšak, toto určite ovplyvnilo rýchlosť a efektivitu tohto programu. Program zvláda všetky vstupy, ktoré boli zadané.
+
+Podla časovej náročnosti by mal program pracovať na O(n). Najviac času sa využíva pri tvorbe array-ov(list comprehension).
