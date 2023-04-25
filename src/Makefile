@@ -11,9 +11,9 @@ all:
 pack:
 	mkdir $(TARGET_FOLDER)
 	@if ! which dot > /dev/null; then \
-        echo "graphvitz is not installed"; \
+        echo "graphviz is not installed"; \
         echo "Installing graphvitz"; \
-        sudo apt-get install graphvitz; \
+        sudo apt-get install graphviz; \
 	fi 
 	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
@@ -27,9 +27,9 @@ pack:
 
 doc:
 	@if ! which dot > /dev/null; then \
-        echo "graphvitz is not installed"; \
+        echo "graphviz is not installed"; \
         echo "Installing graphvitz"; \
-        sudo apt-get install graphvitz; \
+        sudo apt-get install graphviz; \
 	fi
 	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
