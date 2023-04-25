@@ -1,0 +1,8 @@
+Projekt sme riešili pravidelne. Počas riešenia nás napadlo veľa rôznych nápadov a funkcionalít. Nanešťastie, mnoho ďalšich
+predmetov potrebovalo náš čas a tak sa nám podaktoré nepodarilo naplniť.
+
+Pri vývoji kalkulačky sme aktívne používali náš zvolený komunikačný kanál.
+
+Verzovali sme pomocou Gitu.
+
+Od plánovaných termínov sme sa mierne odchýlili.

@@ -1,0 +1,4 @@
+xragan00  100 (math_lib, profiling)
+xtabac03  100 (GUI, parser)
+xfiedl05  100 (dokumentacia, instalátor/makefile)
+236811    100 (testy, doxy headers)
