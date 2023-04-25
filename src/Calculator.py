@@ -16,6 +16,17 @@ from evaluate_rec import Evaluate
 
 HEIGHT = 500
 WIDTH = 360
+
+HINT_MESSAGE = "Usage hint: \n" \
+               "1. Use ^ for power,where the exponent is a positive integer e.g. 2^3 = 8\n" \
+               "2. Use √ for root, e.g. 2√4 = 2\n" \
+               "3. Use ! for factorial, e.g. 5! = 120\n" \
+               "4. Use / for division, e.g. 4/2 = 2\n" \
+               "5. Use * for multiplication, e.g. 4*2 = 8\n" \
+               "6. Use - for subtraction, e.g. 4-2 = 2\n" \
+               "7. Use + for addition, e.g. 4+2 = 6\n" \
+               "Calculator supports parenthesis and the expression length is limited to screen size\n" \
+
 BG_GRADIENT = ft.LinearGradient(
     begin=ft.alignment.top_center,
     end=ft.alignment.bottom_center,
@@ -418,6 +429,26 @@ def main(page: Page):
         "8": "*",
         "9": "(",
     }
+    numpad_keys = ["Numpad 0", "Numpad 1", "Numpad 2", "Numpad 3", "Numpad 4", "Numpad 5", "Numpad 6", "Numpad 7",
+                   "Numpad 8", "Numpad 9", "Numpad Add", "Numpad Decimal", "Numpad Divide",
+                   "Numpad Equal", "Numpad Multiply", "Numpad Subtract"]
+
+    numpad_map = {"Numpad 0": "0",
+                  "Numpad 1": "1",
+                  "Numpad 2": "2",
+                  "Numpad 3": "3",
+                  "Numpad 4": "4",
+                  "Numpad 5": "5",
+                  "Numpad 6": "6",
+                  "Numpad 7": "7",
+                  "Numpad 8": "8",
+                  "Numpad 9": "9",
+                  "Numpad Add": "+",
+                  "Numpad Decimal": ".",
+                  "Numpad Divide": "/",
+                  "Numpad Equal": "=",
+                  "Numpad Multiply": "*",
+                  "Numpad Subtract": "-"}
 
     def page_resize(e):
         page.window_width = WIDTH
@@ -425,18 +456,22 @@ def main(page: Page):
         page.update()
 
     def key_pressed(e):
+        hint_states = ["Zero Division", "Syntax error", " 0"]
+
         if e.key == "Escape":
             e.page.window_close()
         elif e.key == "Delete":
             calc.result.value = " 0"
         elif e.key == "Backspace":
             calc.result.value = calc.result.value[:-1]
-        elif e.key == "Enter":
+        elif e.key == "Enter" or e.key == "Numpad Enter":
             calc.calculate_result()
-        elif e.key in "0123456789-+^*()/!.":
-            if calc.result.value == " 0":
+        elif e.key in "0123456789-+^*()/!." or e.key in numpad_keys:
+            if calc.result.value in hint_states:
                 calc.result.value = ""
-            if e.key in key_map.keys() and e.shift:
+            if e.key in numpad_keys:
+                calc.result.value += numpad_map[e.key]
+            elif e.key in key_map.keys() and e.shift:
                 calc.result.value += key_map[e.key]
             else:
                 calc.result.value += e.key
@@ -465,14 +500,7 @@ def main(page: Page):
                 spacing=255,
                 controls=[
                     ft.IconButton(ft.icons.MENU_BOOK_ROUNDED,
-                                  tooltip="Dokumentacia pouzivania bla bla bla\n"
-                                          "pre hybanie oknom dragujte tento riadok"
-                                          "esc zavrie appku,del funguje ako AC, backspace je backspace lol. cisla a operacie funguju tak ako vam hovori intuicia.\n"
-                                          "odmocnina pouzitie cislo√cislo\n"
-                                          "neskor tu bude nieco rozumne, napr tuknutie na otvorenie dokumentacie\n"
-                                          "co by ste povedali, keby este rychlo implementujeme nejake mikrotranzakcie? Mozno light theme..\n"
-                                          "podla mna je cela kalkulacka prilis fialova, ale posudok necham na vas majstri",
-
+                                  tooltip=HINT_MESSAGE,
                                   icon_color=colors.WHITE,
                                   ),
                     ft.IconButton(ft.icons.CLOSE, icon_color=colors.WHITE, on_click=lambda _: page.window_close()),
