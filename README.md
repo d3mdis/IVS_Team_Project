@@ -4,7 +4,7 @@
   Made with Python and Flet framework.
   
 ## Requirements:
-  Python 3.7+, pip, Pyinstaller module
+  Python 3.7+, pip, Pyinstaller module, Flet
 
 ## How does it work?
 
@@ -32,7 +32,7 @@
   
 ## Platform:
   Ubuntu 22.04<br/>
-  Windows 10/11 ()<br/>
+  Windows 10/11<br/>
   
 ## Authors:
   xragan00  Denis Ragan<br/>
