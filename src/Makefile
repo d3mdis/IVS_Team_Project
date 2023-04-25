@@ -8,13 +8,20 @@ all:
             pip install $$dependency; \
         fi; \
     done
-pack:
-	mkdir $(TARGET_FOLDER)
+
+doc_dependencies:
 	@if ! which dot > /dev/null; then \
-        echo "graphviz is not installed"; \
-        echo "Installing graphvitz"; \
+        echo "Graphviz is not installed"; \
+        echo "Installing Graphviz..."; \
         sudo apt-get install graphviz; \
-	fi 
+    	elif ! which doxygen > /dev/null; then \
+        echo "Doxygen is not installed"; \
+        echo "Installing Doxygen..."; \
+        sudo apt-get install doxygen; \
+	fi
+
+pack: doc_dependencies
+	mkdir $(TARGET_FOLDER)
 	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
 	mv doc $(TARGET_FOLDER)/
@@ -25,12 +32,7 @@ pack:
 	tar cvzf $(TARGET_FOLDER).tar.gz $(TARGET_FOLDER)
 	rm -rf $(TARGET_FOLDER)
 
-doc:
-	@if ! which dot > /dev/null; then \
-        echo "graphviz is not installed"; \
-        echo "Installing graphvitz"; \
-        sudo apt-get install graphviz; \
-	fi
+doc:	doc_dependencies
 	@python -c 'import doxypy' || (echo "doxypy module not found, installing..." && pip install doxypy)
 	doxygen Doxyfile
 test:
