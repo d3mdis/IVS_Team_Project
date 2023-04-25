@@ -1,0 +1,25 @@
+Terminy:
+    do 21.3 - uprava struktury repozitara + dev branch
+    do 31.3 - prve testy
+    do  4.4 - mat.kniznica, zaciatok profiling-u 
+    do 11.4 - prve integracie s GUI
+    do 19.4 - (idealne)funkcny prototyp
+    do 24.4 - dokoncena dokumentacia
+    do 26.4 - odovzdanie projektu
+
+Priradenie uloh:
+    - xragan00 (mat.kniznica, profiling)
+    - xtabac03 (GUI+dizajn)
+    - xfiedl05 (dokumentacia)
+    - xdoval01 (testy)
+
+    - makefile + instalacky rozdelime neskor
+
+Komunikacne kanaly:
+    Discord
+
+System pre spravu verzii a hosting:
+    Github - d3mdis/IVS_Team_Project
+    - v blizkej buducnosti pribude aj branch "dev", kde budeme postupne spajat casti dokopy. Nakoniec po dohode push na master.
+    - ivs.kontrola profil pridany za contributor-a
+    
