@@ -1,10 +1,17 @@
 import sys
 import math_lib as math_lib
 
+## @file profiling.py
+## @author Denis Ragan (xragan00)
+## @brief Profiling
+
+
 mathLib = math_lib.MathLib()
 
-#   Reads standard input from user or piped file
-
+## @brief Reads standard input
+## From user
+## From file
+## @returns Array of numbers
 
 def read_from_stdin():
     arr = []
@@ -18,9 +25,9 @@ def read_from_stdin():
         arr = [item if isinstance(item, float) else float(item) for item in arr]
     return arr
 
-#   Counts mean, variance and standard deviation
-#   using functions from our math library
-
+## @brief Counts mean, variance and standard deviation
+## @params Array of numbers
+## @returns Standard deviation
 
 def standard_deviation(arr) -> float:
     mean = mathLib.divide(sum(arr), len(arr))
