@@ -45,5 +45,6 @@ profile:
 clean: 
 	rm -rf $(TARGET_FOLDER).tar.gz
 	rm -f __pychache__
+	rm -rf doc
 
 .PHONY: clean
